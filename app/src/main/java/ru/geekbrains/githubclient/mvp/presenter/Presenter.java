@@ -1,29 +1,41 @@
 package ru.geekbrains.githubclient.mvp.presenter;
 
+import android.util.Log;
+
 import ru.geekbrains.githubclient.R;
 import ru.geekbrains.githubclient.mvp.model.Model;
 import ru.geekbrains.githubclient.mvp.view.MainView;
 
 public class Presenter {
-    private MainView view;
-    private Model model = new Model();
+    public final int BUTTONS_QTTY = 3;
+    private final String LOG_TAG = "githubclient_Presenter";
+
+    private final MainView view;
+    private final Model model = new Model(BUTTONS_QTTY);
 
     public Presenter(MainView view) {
         this.view = view;
     }
 
     public void counterClick(int id) {
-        switch (id) {
-            case R.id.btn_counter1:
-                view.setButtonText(0, String.valueOf(model.next(0)));
-                break;
-            case R.id.btn_counter2:
-                view.setButtonText(1, String.valueOf(model.next(1)));
-                break;
-            case R.id.btn_counter3:
-                view.setButtonText(2, String.valueOf(model.next(2)));
-                break;
-
+        if (!isIdCorrect(id)) {
+            Log.e(LOG_TAG, "Button index out of bounds, id = " + id);
+            return;
         }
+
+        int value = model.getCurrent(id);
+
+        value = processValue(value);
+
+        model.set(id, value);
+        view.setButtonText(id, String.valueOf(value));
+    }
+
+    private int processValue(int value) {
+        return value + 1;
+    }
+
+    private boolean isIdCorrect(int id) {
+        return 0 <= id && id < BUTTONS_QTTY;
     }
 }
