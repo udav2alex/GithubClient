@@ -2,11 +2,12 @@ package ru.geekbrains.githubclient.mvp.presenter;
 
 import moxy.MvpPresenter;
 import ru.geekbrains.githubclient.GithubApplication;
+import ru.geekbrains.githubclient.mvp.model.entity.GithubUser;
 import ru.geekbrains.githubclient.mvp.view.ShowUserView;
 import ru.terrakok.cicerone.Router;
 
 public class ShowUserPresenter extends MvpPresenter<ShowUserView> {
-    private String login;
+    private GithubUser githubUser;
 
     private Router router = GithubApplication.getApplication().getRouter();
 
@@ -14,11 +15,11 @@ public class ShowUserPresenter extends MvpPresenter<ShowUserView> {
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
 
-        getViewState().setLogin(login);
+        getViewState().setLogin(githubUser.getLogin());
     }
 
-    public void configure(String login) {
-        this.login = login;
+    public void configure(GithubUser githubUser) {
+        this.githubUser = githubUser;
     }
 
     public boolean backPressed() {

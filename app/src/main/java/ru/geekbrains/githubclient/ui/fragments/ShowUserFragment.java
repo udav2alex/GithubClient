@@ -12,12 +12,13 @@ import androidx.annotation.Nullable;
 import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
 import ru.geekbrains.githubclient.R;
+import ru.geekbrains.githubclient.mvp.model.entity.GithubUser;
 import ru.geekbrains.githubclient.mvp.presenter.ShowUserPresenter;
 import ru.geekbrains.githubclient.mvp.view.ShowUserView;
 import ru.geekbrains.githubclient.ui.BackButtonListener;
 
 public class ShowUserFragment extends MvpAppCompatFragment implements ShowUserView, BackButtonListener {
-    private static String BUNDLE_KEY_LOGIN = "ShowUserFragment.login";
+    private static String BUNDLE_KEY_GITHUB_USER = "ShowUserFragment.GithubUser";
 
     private View view;
     private TextView userLogin;
@@ -25,11 +26,11 @@ public class ShowUserFragment extends MvpAppCompatFragment implements ShowUserVi
     @InjectPresenter
     ShowUserPresenter showUserPresenter;
 
-    public static ShowUserFragment getInstance(String login) {
+    public static ShowUserFragment getInstance(GithubUser githubUser) {
         ShowUserFragment fragment = new ShowUserFragment();
 
         Bundle bundle = new Bundle();
-        bundle.putString(BUNDLE_KEY_LOGIN, login);
+        bundle.putParcelable(BUNDLE_KEY_GITHUB_USER, githubUser);
 
         fragment.setArguments(bundle);
         return fragment;
@@ -42,8 +43,8 @@ public class ShowUserFragment extends MvpAppCompatFragment implements ShowUserVi
         Bundle bundle = getArguments();
 
         if (bundle != null) {
-            String login = bundle.getString(BUNDLE_KEY_LOGIN);
-            showUserPresenter.configure(login);
+            GithubUser githubUser = bundle.getParcelable(BUNDLE_KEY_GITHUB_USER);
+            showUserPresenter.configure(githubUser);
         }
     }
 

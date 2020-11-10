@@ -2,6 +2,7 @@ package ru.geekbrains.githubclient.navigation;
 
 import androidx.fragment.app.Fragment;
 
+import ru.geekbrains.githubclient.mvp.model.entity.GithubUser;
 import ru.geekbrains.githubclient.ui.fragments.ShowUserFragment;
 import ru.geekbrains.githubclient.ui.fragments.UsersFragment;
 import ru.terrakok.cicerone.android.support.SupportAppScreen;
@@ -15,16 +16,16 @@ public class Screens {
     }
 
     public static class ViewUserScreen extends SupportAppScreen {
-        private final String login;
+        private final GithubUser githubUser;
 
-        public ViewUserScreen(String login) {
+        public ViewUserScreen(GithubUser githubUser) {
             super();
-            this.login = login;
+            this.githubUser = githubUser;
         }
 
         @Override
         public Fragment getFragment() {
-            return ShowUserFragment.getInstance(login);
+            return ShowUserFragment.getInstance(githubUser);
         }
     }
 }

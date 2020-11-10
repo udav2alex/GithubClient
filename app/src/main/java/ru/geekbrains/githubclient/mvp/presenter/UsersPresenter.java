@@ -30,7 +30,7 @@ public class UsersPresenter extends MvpPresenter<UsersView>  {
         @Override
         public void onItemClick(UserItemView view) {
             router.navigateTo(
-                new Screens.ViewUserScreen(users.get(view.getPos()).getLogin()));
+                new Screens.ViewUserScreen(users.get(view.getPos())));
         }
 
         @Override
