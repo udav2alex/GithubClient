@@ -12,6 +12,7 @@ import ru.geekbrains.githubclient.mvp.model.entity.GithubUserRepo;
 import ru.geekbrains.githubclient.mvp.presenter.list.IUserListPresenter;
 import ru.geekbrains.githubclient.mvp.view.UserItemView;
 import ru.geekbrains.githubclient.mvp.view.UsersView;
+import ru.geekbrains.githubclient.navigation.Screens;
 import ru.terrakok.cicerone.Router;
 
 public class UsersPresenter extends MvpPresenter<UsersView>  {
@@ -28,9 +29,8 @@ public class UsersPresenter extends MvpPresenter<UsersView>  {
 
         @Override
         public void onItemClick(UserItemView view) {
-            if (VERBOSE) {
-                Log.v(TAG, " onItemClick " + view.getPos());
-            }
+            router.navigateTo(
+                new Screens.ViewUserScreen(users.get(view.getPos()).getLogin()));
         }
 
         @Override
