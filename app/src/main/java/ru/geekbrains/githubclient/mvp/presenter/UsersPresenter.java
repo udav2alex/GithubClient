@@ -5,6 +5,10 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import moxy.MvpPresenter;
 import ru.geekbrains.githubclient.GithubApplication;
 import ru.geekbrains.githubclient.mvp.model.entity.GithubUser;
@@ -18,10 +22,10 @@ import ru.terrakok.cicerone.Router;
 public class UsersPresenter extends MvpPresenter<UsersView>  {
     private static final String TAG = UsersPresenter.class.getSimpleName();
 
-    private static final boolean VERBOSE = true;
-
     private GithubUserRepo usersRepo = new GithubUserRepo();
     private Router router = GithubApplication.getApplication().getRouter();
+
+    private CompositeDisposable disposables = new CompositeDisposable();
 
     private class UsersListPresenter implements IUserListPresenter {
 
@@ -61,9 +65,20 @@ public class UsersPresenter extends MvpPresenter<UsersView>  {
     }
 
     private void loadData() {
-        List<GithubUser> users = usersRepo.getUsers();
-        usersListPresenter.users.addAll(users);
-        getViewState().updateList();
+        disposables.add(usersRepo.getUsers()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                (userList) -> {
+                    usersListPresenter.users.addAll(userList);
+                    getViewState().updateList();
+                },
+                (throwable) -> {}
+            ));
+    }
+
+    public void onStop() {
+        disposables.clear();
     }
 
     public boolean backPressed() {
