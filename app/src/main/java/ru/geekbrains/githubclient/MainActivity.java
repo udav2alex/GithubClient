@@ -1,61 +1,55 @@
 package ru.geekbrains.githubclient;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
-import java.util.ArrayList;
-import java.util.List;
+import androidx.fragment.app.Fragment;
 
-import ru.geekbrains.githubclient.mvp.presenter.Presenter;
+import moxy.MvpAppCompatActivity;
+import moxy.presenter.InjectPresenter;
+import ru.geekbrains.githubclient.mvp.presenter.MainPresenter;
 import ru.geekbrains.githubclient.mvp.view.MainView;
+import ru.geekbrains.githubclient.ui.BackButtonListener;
+import ru.terrakok.cicerone.Navigator;
+import ru.terrakok.cicerone.NavigatorHolder;
+import ru.terrakok.cicerone.android.support.SupportAppNavigator;
 
-public class MainActivity extends AppCompatActivity implements MainView {
+public class MainActivity extends MvpAppCompatActivity implements MainView {
 
-    private Presenter presenter;
+    @InjectPresenter
+    MainPresenter presenter;
 
-    private final List<Button> buttons = new ArrayList<>();
+    private NavigatorHolder navigatorHolder = GithubApplication.getApplication().getNavigatorHolder();
+    private Navigator navigator = new SupportAppNavigator(this, getSupportFragmentManager(), R.id.container);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
 
-        presenter = new Presenter(this);
 
-        initButtons();
+    @Override
+    protected void onResumeFragments() {
+        super.onResumeFragments();
+        navigatorHolder.setNavigator(navigator);
     }
 
     @Override
-    public void setButtonText(int index, String text) {
-        buttons.get(index).setText(text);
+    protected void onPause() {
+        super.onPause();
+
+        navigatorHolder.removeNavigator();
     }
 
-    private void initButtons() {
-        for (int i = 0; i < presenter.BUTTONS_QTTY; i++) {
-            // Манипуляции с идентификаторами. Не очень красиво...
-            String buttonId = "btn_counter" + (i+1);
-            int resId = getResources().getIdentifier(buttonId, "id", getPackageName());
-
-            Button button = findViewById(resId);
-            button.setOnClickListener(new ButtonClickListener(i));
-            buttons.add(button);
-        }
-    }
-
-    private class ButtonClickListener implements View.OnClickListener {
-
-        private final int index;
-
-        public ButtonClickListener(int buttonIndex) {
-            this.index = buttonIndex;
+    @Override
+    public void onBackPressed() {
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+            if (fragment instanceof BackButtonListener && ((BackButtonListener) fragment).backPressed()) {
+                return;
+            }
         }
 
-        @Override
-        public void onClick(View v) {
-            presenter.counterClick(index);
-        }
+        presenter.backClicked();
     }
 }
