@@ -6,16 +6,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ru.geekbrains.githubclient.mvp.presenter.Presenter;
 import ru.geekbrains.githubclient.mvp.view.MainView;
 
-public class MainActivity extends AppCompatActivity implements MainView, View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements MainView {
 
     private Presenter presenter;
 
-    private Button buttonCounter1;
-    private Button buttonCounter2;
-    private Button buttonCounter3;
+    private final List<Button> buttons = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,37 +25,37 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
 
         presenter = new Presenter(this);
 
-        buttonCounter1 = findViewById(R.id.btn_counter1);
-        buttonCounter2 = findViewById(R.id.btn_counter2);
-        buttonCounter3 = findViewById(R.id.btn_counter3);
-
-        buttonCounter1.setOnClickListener(this);
-        buttonCounter2.setOnClickListener(this);
-        buttonCounter3.setOnClickListener(this);
-
+        initButtons();
     }
 
     @Override
     public void setButtonText(int index, String text) {
-        switch (index) {
-            case 0:
-                buttonCounter1.setText(text);
-                break;
+        buttons.get(index).setText(text);
+    }
 
-            case 1:
-                buttonCounter2.setText(text);
-                break;
+    private void initButtons() {
+        for (int i = 0; i < presenter.BUTTONS_QTTY; i++) {
+            // Манипуляции с идентификаторами. Не очень красиво...
+            String buttonId = "btn_counter" + (i+1);
+            int resId = getResources().getIdentifier(buttonId, "id", getPackageName());
 
-            case 2:
-                buttonCounter3.setText(text);
-                break;
-
-
+            Button button = findViewById(resId);
+            button.setOnClickListener(new ButtonClickListener(i));
+            buttons.add(button);
         }
     }
 
-    @Override
-    public void onClick(View view) {
-        presenter.counterClick(view.getId());
+    private class ButtonClickListener implements View.OnClickListener {
+
+        private final int index;
+
+        public ButtonClickListener(int buttonIndex) {
+            this.index = buttonIndex;
+        }
+
+        @Override
+        public void onClick(View v) {
+            presenter.counterClick(index);
+        }
     }
 }
