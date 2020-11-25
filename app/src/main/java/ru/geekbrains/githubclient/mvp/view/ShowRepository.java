@@ -4,6 +4,6 @@ import moxy.MvpView;
 import moxy.viewstate.strategy.alias.AddToEndSingle;
 
 @AddToEndSingle
-public interface ShowUserView extends MvpView {
-    void setLogin(String login);
+public interface ShowRepository extends MvpView {
+    void shopForkCount(int count);
 }

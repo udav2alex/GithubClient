@@ -6,6 +6,7 @@ import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import ru.geekbrains.githubclient.mvp.model.api.IDataSource;
 import ru.geekbrains.githubclient.mvp.model.entity.GithubUser;
+import ru.geekbrains.githubclient.mvp.model.entity.UserRepository;
 import ru.geekbrains.githubclient.mvp.model.repo.IGithubUserRepo;
 
 public class RetrofitGithubUserRepo implements IGithubUserRepo {
@@ -21,7 +22,7 @@ public class RetrofitGithubUserRepo implements IGithubUserRepo {
     }
 
     @Override
-    public Single<List<GithubUser>> getRepos(String userLogin) {
-        return dataSource.getRepos(userLogin).subscribeOn(Schedulers.io());
+    public Single<List<UserRepository>> getRepos(String reposUrl) {
+        return dataSource.getRepos(reposUrl).subscribeOn(Schedulers.io());
     }
 }

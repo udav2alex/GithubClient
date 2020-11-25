@@ -31,7 +31,6 @@ public class UsersPresenter extends MvpPresenter<UsersView> {
     }
 
     private class UsersListPresenter implements IUserListPresenter {
-
         private final List<GithubUser> users = new ArrayList<>();
 
         @Override

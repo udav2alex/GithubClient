@@ -1,26 +1,21 @@
 package ru.geekbrains.githubclient.ui.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import ru.geekbrains.githubclient.R;
-import ru.geekbrains.githubclient.mvp.presenter.list.IUserListPresenter;
-import ru.geekbrains.githubclient.mvp.view.UserItemView;
-import ru.geekbrains.githubclient.mvp.view.image.GlideImageLoader;
-import ru.geekbrains.githubclient.mvp.view.image.IImageLoader;
+import ru.geekbrains.githubclient.mvp.presenter.list.IRepositoriesListPresenter;
+import ru.geekbrains.githubclient.mvp.view.RepositoryItemView;
 
-public class UserRVAdapter extends RecyclerView.Adapter<UserRVAdapter.ViewHolder> {
-    static IImageLoader<ImageView> imageLoader = new GlideImageLoader();
-    IUserListPresenter presenter;
+public class RepositoryRVAdapter extends RecyclerView.Adapter<RepositoryRVAdapter.ViewHolder> {
+    private final IRepositoriesListPresenter presenter;
 
-    public UserRVAdapter(IUserListPresenter presenter) {
+    public RepositoryRVAdapter(IRepositoriesListPresenter presenter) {
         this.presenter = presenter;
     }
 
@@ -30,7 +25,8 @@ public class UserRVAdapter extends RecyclerView.Adapter<UserRVAdapter.ViewHolder
         return new ViewHolder(
             LayoutInflater
                 .from(parent.getContext())
-                .inflate(R.layout.item_user, parent, false));
+                .inflate(R.layout.item_repository, parent, false)
+        );
     }
 
     @Override
@@ -48,25 +44,25 @@ public class UserRVAdapter extends RecyclerView.Adapter<UserRVAdapter.ViewHolder
     }
 
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements UserItemView {
-        TextView textView;
-        ImageView imageView;
+    public static class ViewHolder extends RecyclerView.ViewHolder implements RepositoryItemView {
+        private final TextView repoName;
+        private final TextView repoDescription;
         int position;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.tv_login);
-            imageView = itemView.findViewById(R.id.iv_avatar);
+            repoName = itemView.findViewById(R.id.tv_repo_name);
+            repoDescription = itemView.findViewById(R.id.tv_repo_description);
         }
 
         @Override
-        public void setLogin(String text) {
-            textView.setText(text);
+        public void setName(String name) {
+            repoName.setText(name);
         }
 
         @Override
-        public void setAvatar(String url) {
-            imageLoader.loadImage(url, imageView);
+        public void setDescription(String description) {
+            repoDescription.setText(description);
         }
 
         @Override

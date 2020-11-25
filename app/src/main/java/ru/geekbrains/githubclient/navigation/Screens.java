@@ -3,7 +3,7 @@ package ru.geekbrains.githubclient.navigation;
 import androidx.fragment.app.Fragment;
 
 import ru.geekbrains.githubclient.mvp.model.entity.GithubUser;
-import ru.geekbrains.githubclient.ui.fragments.ShowUserFragment;
+import ru.geekbrains.githubclient.ui.fragments.RepositoriesFragment;
 import ru.geekbrains.githubclient.ui.fragments.UsersFragment;
 import ru.terrakok.cicerone.android.support.SupportAppScreen;
 
@@ -25,7 +25,7 @@ public class Screens {
 
         @Override
         public Fragment getFragment() {
-            return ShowUserFragment.getInstance(githubUser);
+            return RepositoriesFragment.getInstance(githubUser);
         }
     }
 }

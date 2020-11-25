@@ -5,12 +5,12 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 
-public class UserRepos implements Parcelable {
+public class UserRepository implements Parcelable {
     @Expose private String id;
     @Expose private String name;
     @Expose private String description;
 
-    public UserRepos(String id) {
+    public UserRepository(String id) {
         this.id = id;
     }
 
@@ -28,21 +28,21 @@ public class UserRepos implements Parcelable {
 
 
     // Parcelization code below
-    protected UserRepos(Parcel in) {
+    protected UserRepository(Parcel in) {
         id = in.readString();
         name = in.readString();
         description = in.readString();
     }
 
-    public static final Creator<UserRepos> CREATOR = new Creator<UserRepos>() {
+    public static final Creator<UserRepository> CREATOR = new Creator<UserRepository>() {
         @Override
-        public UserRepos createFromParcel(Parcel in) {
-            return new UserRepos(in);
+        public UserRepository createFromParcel(Parcel in) {
+            return new UserRepository(in);
         }
 
         @Override
-        public UserRepos[] newArray(int size) {
-            return new UserRepos[size];
+        public UserRepository[] newArray(int size) {
+            return new UserRepository[size];
         }
     };
 
