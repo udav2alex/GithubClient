@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,9 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import ru.geekbrains.githubclient.R;
 import ru.geekbrains.githubclient.mvp.presenter.list.IUserListPresenter;
 import ru.geekbrains.githubclient.mvp.view.UserItemView;
+import ru.geekbrains.githubclient.mvp.view.image.GlideImageLoader;
+import ru.geekbrains.githubclient.mvp.view.image.IImageLoader;
 
 public class UserRVAdapter extends RecyclerView.Adapter<UserRVAdapter.ViewHolder> {
-
+    static IImageLoader<ImageView> imageLoader = new GlideImageLoader();
     IUserListPresenter presenter;
 
     public UserRVAdapter(IUserListPresenter presenter) {
@@ -48,17 +51,23 @@ public class UserRVAdapter extends RecyclerView.Adapter<UserRVAdapter.ViewHolder
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements UserItemView {
         TextView textView;
+        ImageView imageView;
         int position;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
             textView = itemView.findViewById(R.id.tv_login);
+            imageView = itemView.findViewById(R.id.iv_avatar);
         }
 
         @Override
         public void setLogin(String text) {
             textView.setText(text);
+        }
+
+        @Override
+        public void setAvatar(String url) {
+            imageLoader.loadImage(url, imageView);
         }
 
         @Override
