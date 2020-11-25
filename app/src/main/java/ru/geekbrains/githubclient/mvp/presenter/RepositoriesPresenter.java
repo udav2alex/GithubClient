@@ -14,16 +14,17 @@ import ru.geekbrains.githubclient.mvp.model.repo.retrofit.RetrofitGithubUserRepo
 import ru.geekbrains.githubclient.mvp.presenter.list.IRepositoriesListPresenter;
 import ru.geekbrains.githubclient.mvp.view.RepositoryItemView;
 import ru.geekbrains.githubclient.mvp.view.RepositoriesView;
+import ru.geekbrains.githubclient.navigation.Screens;
 import ru.terrakok.cicerone.Router;
 
 public class RepositoriesPresenter extends MvpPresenter<RepositoriesView> {
     private GithubUser githubUser;
 
-    private Router router = GithubApplication.getApplication().getRouter();
+    private final Router router = GithubApplication.getApplication().getRouter();
 
     private final CompositeDisposable disposables = new CompositeDisposable();
-    private IGithubUserRepo userRepo;
-    private Scheduler scheduler;
+    private final IGithubUserRepo userRepo;
+    private final Scheduler scheduler;
 
     public RepositoriesPresenter(Scheduler scheduler) {
         this.scheduler = scheduler;
@@ -36,7 +37,8 @@ public class RepositoriesPresenter extends MvpPresenter<RepositoriesView> {
 
         @Override
         public void onItemClick(RepositoryItemView view) {
-
+            router.navigateTo(
+                new Screens.ShowRepositoryScreen(repositories.get(view.getPos())));
         }
 
         @Override

@@ -36,7 +36,7 @@ public class UsersPresenter extends MvpPresenter<UsersView> {
         @Override
         public void onItemClick(UserItemView view) {
             router.navigateTo(
-                new Screens.ViewUserScreen(users.get(view.getPos())));
+                new Screens.RepositoriesScreen(users.get(view.getPos())));
         }
 
         @Override
@@ -64,7 +64,6 @@ public class UsersPresenter extends MvpPresenter<UsersView> {
 
         getViewState().init();
         loadData();
-
     }
 
     private void loadData() {
@@ -87,6 +86,5 @@ public class UsersPresenter extends MvpPresenter<UsersView> {
     public boolean backPressed() {
         router.exit();
         return true;
-
     }
 }

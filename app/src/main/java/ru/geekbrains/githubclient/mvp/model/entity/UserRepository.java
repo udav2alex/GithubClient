@@ -9,6 +9,7 @@ public class UserRepository implements Parcelable {
     @Expose private String id;
     @Expose private String name;
     @Expose private String description;
+    @Expose private int forks;
 
     public UserRepository(String id) {
         this.id = id;
@@ -26,12 +27,17 @@ public class UserRepository implements Parcelable {
         return description;
     }
 
+    public int getForks() {
+        return forks;
+    }
+
 
     // Parcelization code below
     protected UserRepository(Parcel in) {
         id = in.readString();
         name = in.readString();
         description = in.readString();
+        forks = in.readInt();
     }
 
     public static final Creator<UserRepository> CREATOR = new Creator<UserRepository>() {
@@ -56,5 +62,6 @@ public class UserRepository implements Parcelable {
         dest.writeString(id);
         dest.writeString(name);
         dest.writeString(description);
+        dest.writeInt(forks);
     }
 }
