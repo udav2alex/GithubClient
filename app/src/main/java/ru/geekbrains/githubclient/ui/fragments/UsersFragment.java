@@ -69,6 +69,12 @@ public class UsersFragment extends MvpAppCompatFragment implements UsersView, Ba
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        usersPresenter.onStop();
+    }
+
+    @Override
     public void updateList() {
         adapter.notifyDataSetChanged();
     }
