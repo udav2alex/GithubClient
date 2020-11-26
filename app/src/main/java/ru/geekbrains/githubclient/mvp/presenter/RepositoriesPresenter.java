@@ -9,8 +9,9 @@ import moxy.MvpPresenter;
 import ru.geekbrains.githubclient.GithubApplication;
 import ru.geekbrains.githubclient.mvp.model.entity.GithubUser;
 import ru.geekbrains.githubclient.mvp.model.entity.UserRepository;
-import ru.geekbrains.githubclient.mvp.model.repo.IGithubUserRepo;
-import ru.geekbrains.githubclient.mvp.model.repo.retrofit.RetrofitGithubUserRepo;
+import ru.geekbrains.githubclient.mvp.model.repo.IGithubRepositoriesRepo;
+import ru.geekbrains.githubclient.mvp.model.repo.retrofit.RetrofitGithubRepositoriesRepo;
+import ru.geekbrains.githubclient.mvp.model.repo.retrofit.RetrofitGithubUsersRepo;
 import ru.geekbrains.githubclient.mvp.presenter.list.IRepositoriesListPresenter;
 import ru.geekbrains.githubclient.mvp.view.RepositoryItemView;
 import ru.geekbrains.githubclient.mvp.view.RepositoriesView;
@@ -23,12 +24,12 @@ public class RepositoriesPresenter extends MvpPresenter<RepositoriesView> {
     private final Router router = GithubApplication.getApplication().getRouter();
 
     private final CompositeDisposable disposables = new CompositeDisposable();
-    private final IGithubUserRepo userRepo;
+    private final IGithubRepositoriesRepo repositoriesRepo;
     private final Scheduler scheduler;
 
     public RepositoriesPresenter(Scheduler scheduler) {
         this.scheduler = scheduler;
-        this.userRepo = new RetrofitGithubUserRepo(
+        this.repositoriesRepo = new RetrofitGithubRepositoriesRepo(
             GithubApplication.INSTANCE.getApi().getDataSource());
     }
 
@@ -68,8 +69,8 @@ public class RepositoriesPresenter extends MvpPresenter<RepositoriesView> {
     }
 
     private void loadData() {
-        disposables.add(userRepo
-            .getRepos(githubUser.getReposUrl())
+        disposables.add(repositoriesRepo
+            .getRepos(githubUser)
             .observeOn(scheduler)
             .subscribe(
                 (userRepositories) -> {

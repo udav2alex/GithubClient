@@ -8,8 +8,8 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import moxy.MvpPresenter;
 import ru.geekbrains.githubclient.GithubApplication;
 import ru.geekbrains.githubclient.mvp.model.entity.GithubUser;
-import ru.geekbrains.githubclient.mvp.model.repo.IGithubUserRepo;
-import ru.geekbrains.githubclient.mvp.model.repo.retrofit.RetrofitGithubUserRepo;
+import ru.geekbrains.githubclient.mvp.model.repo.IGithubUsersRepo;
+import ru.geekbrains.githubclient.mvp.model.repo.retrofit.RetrofitGithubUsersRepo;
 import ru.geekbrains.githubclient.mvp.presenter.list.IUserListPresenter;
 import ru.geekbrains.githubclient.mvp.view.UserItemView;
 import ru.geekbrains.githubclient.mvp.view.UsersView;
@@ -21,12 +21,12 @@ public class UsersPresenter extends MvpPresenter<UsersView> {
 
     private final CompositeDisposable disposables = new CompositeDisposable();
 
-    private final IGithubUserRepo userRepo;
+    private final IGithubUsersRepo userRepo;
     private final Scheduler scheduler;
 
     public UsersPresenter(Scheduler scheduler) {
         this.scheduler = scheduler;
-        this.userRepo = new RetrofitGithubUserRepo(
+        this.userRepo = new RetrofitGithubUsersRepo(
             GithubApplication.INSTANCE.getApi().getDataSource());
     }
 
