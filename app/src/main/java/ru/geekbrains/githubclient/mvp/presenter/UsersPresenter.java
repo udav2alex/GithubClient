@@ -17,17 +17,16 @@ import ru.geekbrains.githubclient.navigation.Screens;
 import ru.terrakok.cicerone.Router;
 
 public class UsersPresenter extends MvpPresenter<UsersView> {
-    private final Router router = GithubApplication.getApplication().getRouter();
-
     private final CompositeDisposable disposables = new CompositeDisposable();
 
+    private final Router router;
     private final IGithubUsersRepo userRepo;
     private final Scheduler scheduler;
 
-    public UsersPresenter(Scheduler scheduler) {
+    public UsersPresenter(Scheduler scheduler, IGithubUsersRepo userRepo, Router router) {
         this.scheduler = scheduler;
-        this.userRepo = new RetrofitGithubUsersRepo(
-            GithubApplication.INSTANCE.getApi().getDataSource());
+        this.userRepo = userRepo;
+        this.router = router;
     }
 
     private class UsersListPresenter implements IUserListPresenter {

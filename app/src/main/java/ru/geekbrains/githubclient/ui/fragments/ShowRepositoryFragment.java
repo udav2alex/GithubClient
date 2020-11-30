@@ -12,8 +12,9 @@ import androidx.fragment.app.Fragment;
 
 import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
+import moxy.presenter.ProvidePresenter;
 import ru.geekbrains.githubclient.R;
-import ru.geekbrains.githubclient.mvp.model.entity.UserRepository;
+import ru.geekbrains.githubclient.mvp.model.entity.GithubRepository;
 import ru.geekbrains.githubclient.mvp.presenter.ShowRepositoryPresenter;
 import ru.geekbrains.githubclient.mvp.view.ShowRepositoryView;
 import ru.geekbrains.githubclient.ui.BackButtonListener;
@@ -37,8 +38,8 @@ public class ShowRepositoryFragment extends MvpAppCompatFragment
         Bundle bundle = getArguments();
 
         if (bundle != null) {
-            UserRepository userRepository = bundle.getParcelable(BUNDLE_KEY_USER_REPOSITORY);
-            showRepositoryPresenter.configure(userRepository);
+            GithubRepository githubRepository = bundle.getParcelable(BUNDLE_KEY_USER_REPOSITORY);
+            showRepositoryPresenter.configure(githubRepository);
         }
     }
 
@@ -54,11 +55,11 @@ public class ShowRepositoryFragment extends MvpAppCompatFragment
         return view;
     }
 
-    public static Fragment getInstance(UserRepository userRepository) {
+    public static Fragment getInstance(GithubRepository githubRepository) {
         ShowRepositoryFragment fragment = new ShowRepositoryFragment();
 
         Bundle bundle = new Bundle();
-        bundle.putParcelable(BUNDLE_KEY_USER_REPOSITORY, userRepository);
+        bundle.putParcelable(BUNDLE_KEY_USER_REPOSITORY, githubRepository);
         fragment.setArguments(bundle);
 
         return fragment;

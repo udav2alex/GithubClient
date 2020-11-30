@@ -10,6 +10,8 @@ import ru.terrakok.cicerone.Router;
 public class GithubApplication extends Application {
     public static GithubApplication INSTANCE;
 
+    public static final boolean DEBUG_MODE = true;
+
     private Cicerone<Router> cicerone;
     private ApiHolder apiHolder;
 
