@@ -19,6 +19,7 @@ import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
 import ru.geekbrains.githubclient.GithubApplication;
 import ru.geekbrains.githubclient.R;
+import ru.geekbrains.githubclient.mvp.model.cache.room.RoomGithubRepositoriesCache;
 import ru.geekbrains.githubclient.mvp.model.entity.GithubUser;
 import ru.geekbrains.githubclient.mvp.model.entity.room.GithubDatabase;
 import ru.geekbrains.githubclient.mvp.model.repo.retrofit.RetrofitGithubRepositoriesRepo;
@@ -45,7 +46,7 @@ public class RepositoriesFragment extends MvpAppCompatFragment implements Reposi
               new RetrofitGithubRepositoriesRepo(
                     GithubApplication.INSTANCE.getApi().getDataSource(),
                     new AndroidNetworkStatus(),
-                    GithubDatabase.getInstance()),
+                    new RoomGithubRepositoriesCache()),
               GithubApplication.INSTANCE.getRouter()
         );
     }

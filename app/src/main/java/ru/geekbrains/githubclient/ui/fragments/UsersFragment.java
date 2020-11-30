@@ -20,6 +20,7 @@ import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
 import ru.geekbrains.githubclient.GithubApplication;
 import ru.geekbrains.githubclient.R;
+import ru.geekbrains.githubclient.mvp.model.cache.room.RoomGithubUserCache;
 import ru.geekbrains.githubclient.mvp.model.entity.room.GithubDatabase;
 import ru.geekbrains.githubclient.mvp.model.repo.retrofit.RetrofitGithubUsersRepo;
 import ru.geekbrains.githubclient.mvp.presenter.UsersPresenter;
@@ -44,7 +45,7 @@ public class UsersFragment extends MvpAppCompatFragment implements UsersView, Ba
             new RetrofitGithubUsersRepo(
                 GithubApplication.INSTANCE.getApi().getDataSource(),
                 new AndroidNetworkStatus(),
-                GithubDatabase.getInstance()
+                new RoomGithubUserCache()
             ),
             GithubApplication.getApplication().getRouter()
         );

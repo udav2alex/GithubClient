@@ -9,6 +9,7 @@ import androidx.room.Update;
 
 import java.util.List;
 
+import ru.geekbrains.githubclient.mvp.model.entity.GithubUser;
 import ru.geekbrains.githubclient.mvp.model.entity.room.RoomGithubRepository;
 
 @Dao
@@ -28,8 +29,6 @@ public interface GithubRepositoryDAO {
     @Delete
     void delete(List<RoomGithubRepository> repositories);
 
-    @Query("SELECT * FROM RoomGithubRepository;")
-    List<RoomGithubRepository> getAll();
-    @Query("SELECT * FROM RoomGithubRepository WHERE id = :id;")
-    RoomGithubRepository getById(String id);
+    @Query("SELECT * FROM RoomGithubRepository WHERE userId = :userId;")
+    List<RoomGithubRepository> getAll(String userId);
 }
