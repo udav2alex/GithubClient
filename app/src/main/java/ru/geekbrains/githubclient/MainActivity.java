@@ -20,7 +20,8 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
     MainPresenter presenter;
 
     private NavigatorHolder navigatorHolder = GithubApplication.getApplication().getNavigatorHolder();
-    private Navigator navigator = new SupportAppNavigator(this, getSupportFragmentManager(), R.id.container);
+    private Navigator navigator = new SupportAppNavigator(
+        this, getSupportFragmentManager(), R.id.container);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

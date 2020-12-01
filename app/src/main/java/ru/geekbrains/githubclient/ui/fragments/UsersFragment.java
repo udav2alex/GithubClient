@@ -1,17 +1,23 @@
 package ru.geekbrains.githubclient.ui.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Objects;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
+import moxy.presenter.ProvidePresenter;
 import ru.geekbrains.githubclient.R;
 import ru.geekbrains.githubclient.mvp.presenter.UsersPresenter;
 import ru.geekbrains.githubclient.mvp.view.UsersView;
@@ -19,35 +25,17 @@ import ru.geekbrains.githubclient.ui.BackButtonListener;
 import ru.geekbrains.githubclient.ui.adapter.UserRVAdapter;
 
 public class UsersFragment extends MvpAppCompatFragment implements UsersView, BackButtonListener {
+    public final static String LOG_TAG = "UsersFragment";
 
     private RecyclerView recyclerView;
-    private UserRVAdapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
-
     private View view;
 
     @InjectPresenter
     UsersPresenter usersPresenter;
 
-    public static UsersFragment getInstance(int data) {
-        UsersFragment fragment = new UsersFragment();
-
-        Bundle bundle = new Bundle();
-        bundle.putInt("key", data);
-
-        fragment.setArguments(bundle);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        Bundle bundle = getArguments();
-
-        if (bundle != null) {
-            // запоминаем
-        }
+    @ProvidePresenter
+    UsersPresenter getUsersPresenter() {
+        return new UsersPresenter(AndroidSchedulers.mainThread());
     }
 
     @Nullable
@@ -62,9 +50,8 @@ public class UsersFragment extends MvpAppCompatFragment implements UsersView, Ba
 
     @Override
     public void init() {
-        layoutManager = new LinearLayoutManager(view.getContext());
-        adapter = new UserRVAdapter(usersPresenter.getUsersListPresenter());
-        recyclerView.setLayoutManager(layoutManager);
+        UserRVAdapter adapter = new UserRVAdapter(usersPresenter.getUsersListPresenter());
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(adapter);
     }
 
@@ -76,7 +63,13 @@ public class UsersFragment extends MvpAppCompatFragment implements UsersView, Ba
 
     @Override
     public void updateList() {
-        adapter.notifyDataSetChanged();
+        Objects.requireNonNull(recyclerView.getAdapter()).notifyDataSetChanged();
+    }
+
+    @Override
+    public void showError(String description) {
+        Log.w(LOG_TAG, description);
+        Toast.makeText(getActivity(), description, Toast.LENGTH_LONG).show();
     }
 
     @Override

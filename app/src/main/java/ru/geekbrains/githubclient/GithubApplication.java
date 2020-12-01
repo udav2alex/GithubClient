@@ -11,6 +11,7 @@ public class GithubApplication extends Application {
     public static GithubApplication INSTANCE;
 
     private Cicerone<Router> cicerone;
+    private ApiHolder apiHolder;
 
     @Override
     public void onCreate() {
@@ -25,12 +26,17 @@ public class GithubApplication extends Application {
         return INSTANCE;
     }
 
-    private void initCicerone() {
-        cicerone = Cicerone.create();
-    }
-
     public Router getRouter() {
         return cicerone.getRouter();
+    }
+
+    public ApiHolder getApi() {
+        return apiHolder;
+    }
+
+    private void initCicerone() {
+        cicerone = Cicerone.create();
+        apiHolder = new ApiHolder();
     }
 
     public NavigatorHolder getNavigatorHolder() {
