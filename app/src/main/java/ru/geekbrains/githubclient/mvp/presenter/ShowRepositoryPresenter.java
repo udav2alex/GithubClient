@@ -1,5 +1,7 @@
 package ru.geekbrains.githubclient.mvp.presenter;
 
+import javax.inject.Inject;
+
 import moxy.MvpPresenter;
 import ru.geekbrains.githubclient.GithubApplication;
 import ru.geekbrains.githubclient.mvp.model.entity.GithubRepository;
@@ -9,7 +11,9 @@ import ru.terrakok.cicerone.Router;
 public class ShowRepositoryPresenter extends MvpPresenter<ShowRepositoryView> {
     private GithubRepository githubRepository;
 
-    private final Router router = GithubApplication.getApplication().getRouter();
+    { GithubApplication.getInstance().getAppComponent().inject(this); }
+    @Inject
+    Router router;
 
     public void configure(GithubRepository githubRepository) {
         this.githubRepository = githubRepository;

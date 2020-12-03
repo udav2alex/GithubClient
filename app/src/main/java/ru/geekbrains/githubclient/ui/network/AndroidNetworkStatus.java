@@ -8,6 +8,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import javax.inject.Inject;
+
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
@@ -17,13 +19,17 @@ import ru.geekbrains.githubclient.mvp.model.network.INetworkStatus;
 public class AndroidNetworkStatus implements INetworkStatus {
     private final static String LOG_TAG = AndroidNetworkStatus.class.getName();
 
+    { GithubApplication.getInstance().getAppComponent().inject(this); }
+    @Inject
+    GithubApplication application;
+
     private final BehaviorSubject<Boolean> statusBus = BehaviorSubject.create();
 
     public AndroidNetworkStatus() {
         statusBus.onNext(false);
 
-        ConnectivityManager connectivityManager = (ConnectivityManager) GithubApplication.INSTANCE
-            .getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager =
+              (ConnectivityManager) application.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         final NetworkRequest networkRequest = new NetworkRequest.Builder().build();
 

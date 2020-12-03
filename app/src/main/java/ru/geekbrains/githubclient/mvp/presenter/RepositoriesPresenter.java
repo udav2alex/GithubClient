@@ -3,9 +3,12 @@ package ru.geekbrains.githubclient.mvp.presenter;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.rxjava3.core.Scheduler;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import moxy.MvpPresenter;
+import ru.geekbrains.githubclient.GithubApplication;
 import ru.geekbrains.githubclient.mvp.model.entity.GithubUser;
 import ru.geekbrains.githubclient.mvp.model.entity.GithubRepository;
 import ru.geekbrains.githubclient.mvp.model.repo.IGithubRepositoriesRepo;
@@ -19,16 +22,13 @@ public class RepositoriesPresenter extends MvpPresenter<RepositoriesView> {
     private GithubUser githubUser;
     private final CompositeDisposable disposables = new CompositeDisposable();
 
-    private final Scheduler scheduler;
-    private final IGithubRepositoriesRepo repositoriesRepo;
-    private final Router router;
-
-    public RepositoriesPresenter(
-          Scheduler scheduler, IGithubRepositoriesRepo repositoriesRepo, Router router) {
-        this.scheduler = scheduler;
-        this.repositoriesRepo = repositoriesRepo;
-        this.router = router;
-    }
+    { GithubApplication.getInstance().getAppComponent().inject(this); }
+    @Inject
+    Scheduler scheduler;
+    @Inject
+    IGithubRepositoriesRepo repositoriesRepo;
+    @Inject
+    Router router;
 
     private class RepositoriesListPresenter implements IRepositoriesListPresenter {
         private final List<GithubRepository> repositories = new ArrayList<>();

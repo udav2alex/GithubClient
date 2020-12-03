@@ -3,15 +3,21 @@ package ru.geekbrains.githubclient.mvp.model.cache.room;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
-import ru.geekbrains.githubclient.mvp.model.cache.IGithubUserCache;
+import ru.geekbrains.githubclient.GithubApplication;
+import ru.geekbrains.githubclient.mvp.model.cache.IGithubUsersCache;
 import ru.geekbrains.githubclient.mvp.model.entity.GithubUser;
 import ru.geekbrains.githubclient.mvp.model.entity.room.GithubDatabase;
 import ru.geekbrains.githubclient.mvp.model.entity.room.RoomGithubUser;
 
-public class RoomGithubUserCache implements IGithubUserCache {
-    GithubDatabase database = GithubDatabase.getInstance();
+public class RoomGithubUsersCache implements IGithubUsersCache {
+
+    { GithubApplication.getInstance().getAppComponent().inject(this); }
+    @Inject
+    GithubDatabase database;
 
     @Override
     public Completable saveUsers(List<GithubUser> users) {

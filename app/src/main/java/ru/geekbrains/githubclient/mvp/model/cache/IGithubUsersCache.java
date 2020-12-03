@@ -6,7 +6,7 @@ import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import ru.geekbrains.githubclient.mvp.model.entity.GithubUser;
 
-public interface IGithubUserCache {
+public interface IGithubUsersCache {
     Completable saveUsers(List<GithubUser> users);
     Single<List<GithubUser>> loadUsers();
 }

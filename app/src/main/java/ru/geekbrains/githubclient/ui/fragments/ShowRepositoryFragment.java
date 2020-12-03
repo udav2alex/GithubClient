@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment;
 
 import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
-import moxy.presenter.ProvidePresenter;
 import ru.geekbrains.githubclient.R;
 import ru.geekbrains.githubclient.mvp.model.entity.GithubRepository;
 import ru.geekbrains.githubclient.mvp.presenter.ShowRepositoryPresenter;

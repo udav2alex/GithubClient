@@ -3,8 +3,11 @@ package ru.geekbrains.githubclient.mvp.model.cache.room;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
+import ru.geekbrains.githubclient.GithubApplication;
 import ru.geekbrains.githubclient.mvp.model.cache.IGithubRepositoriesCache;
 import ru.geekbrains.githubclient.mvp.model.entity.GithubRepository;
 import ru.geekbrains.githubclient.mvp.model.entity.GithubUser;
@@ -12,7 +15,10 @@ import ru.geekbrains.githubclient.mvp.model.entity.room.GithubDatabase;
 import ru.geekbrains.githubclient.mvp.model.entity.room.RoomGithubRepository;
 
 public class RoomGithubRepositoriesCache implements IGithubRepositoriesCache {
-    GithubDatabase database = GithubDatabase.getInstance();
+
+    { GithubApplication.getInstance().getAppComponent().inject(this); }
+    @Inject
+    GithubDatabase database;
 
     @Override
     public Completable saveRepositories(List<GithubRepository> repositories, GithubUser user) {

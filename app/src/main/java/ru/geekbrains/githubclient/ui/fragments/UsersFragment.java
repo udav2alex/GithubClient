@@ -14,20 +14,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Objects;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
-import moxy.presenter.ProvidePresenter;
-import ru.geekbrains.githubclient.GithubApplication;
 import ru.geekbrains.githubclient.R;
-import ru.geekbrains.githubclient.mvp.model.cache.room.RoomGithubUserCache;
-import ru.geekbrains.githubclient.mvp.model.entity.room.GithubDatabase;
-import ru.geekbrains.githubclient.mvp.model.repo.retrofit.RetrofitGithubUsersRepo;
 import ru.geekbrains.githubclient.mvp.presenter.UsersPresenter;
 import ru.geekbrains.githubclient.mvp.view.UsersView;
 import ru.geekbrains.githubclient.ui.BackButtonListener;
 import ru.geekbrains.githubclient.ui.adapter.UserRVAdapter;
-import ru.geekbrains.githubclient.ui.network.AndroidNetworkStatus;
 
 public class UsersFragment extends MvpAppCompatFragment implements UsersView, BackButtonListener {
     public final static String LOG_TAG = "UsersFragment";
@@ -37,19 +30,6 @@ public class UsersFragment extends MvpAppCompatFragment implements UsersView, Ba
 
     @InjectPresenter
     UsersPresenter usersPresenter;
-
-    @ProvidePresenter
-    UsersPresenter getUsersPresenter() {
-        return new UsersPresenter(
-            AndroidSchedulers.mainThread(),
-            new RetrofitGithubUsersRepo(
-                GithubApplication.INSTANCE.getApi().getDataSource(),
-                new AndroidNetworkStatus(),
-                new RoomGithubUserCache()
-            ),
-            GithubApplication.getApplication().getRouter()
-        );
-    }
 
     @Nullable
     @Override

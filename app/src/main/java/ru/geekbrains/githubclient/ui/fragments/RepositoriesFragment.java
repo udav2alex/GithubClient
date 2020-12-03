@@ -39,18 +39,6 @@ public class RepositoriesFragment extends MvpAppCompatFragment implements Reposi
     @InjectPresenter
     RepositoriesPresenter repositoriesPresenter;
 
-    @ProvidePresenter
-    RepositoriesPresenter getRepositoriesPresenter() {
-        return new RepositoriesPresenter(
-              AndroidSchedulers.mainThread(),
-              new RetrofitGithubRepositoriesRepo(
-                    GithubApplication.INSTANCE.getApi().getDataSource(),
-                    new AndroidNetworkStatus(),
-                    new RoomGithubRepositoriesCache()),
-              GithubApplication.INSTANCE.getRouter()
-        );
-    }
-
     public static RepositoriesFragment getInstance(GithubUser githubUser) {
         RepositoriesFragment fragment = new RepositoriesFragment();
 

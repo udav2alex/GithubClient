@@ -1,9 +1,10 @@
 package ru.geekbrains.githubclient;
 
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.fragment.app.Fragment;
+
+import javax.inject.Inject;
 
 import moxy.MvpAppCompatActivity;
 import moxy.presenter.InjectPresenter;
@@ -19,9 +20,12 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
     @InjectPresenter
     MainPresenter presenter;
 
-    private NavigatorHolder navigatorHolder = GithubApplication.getApplication().getNavigatorHolder();
-    private Navigator navigator = new SupportAppNavigator(
-        this, getSupportFragmentManager(), R.id.container);
+    { GithubApplication.getInstance().getAppComponent().inject(this); }
+    @Inject
+    NavigatorHolder navigatorHolder;
+
+    private final Navigator navigator = new SupportAppNavigator(
+          this, getSupportFragmentManager(), R.id.container);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
