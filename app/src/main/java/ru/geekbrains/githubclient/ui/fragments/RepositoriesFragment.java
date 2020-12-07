@@ -101,6 +101,11 @@ public class RepositoriesFragment extends MvpAppCompatFragment implements Reposi
     }
 
     @Override
+    public void releaseDaggerComponent() {
+        GithubApplication.getInstance().releaseRepositoriesComponent();
+    }
+
+    @Override
     public void showError(String description) {
 
     }

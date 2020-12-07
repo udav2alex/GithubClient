@@ -17,7 +17,7 @@ import ru.geekbrains.githubclient.mvp.model.repo.IGithubRepositoriesRepo;
 
 public class RetrofitGithubRepositoriesRepo implements IGithubRepositoriesRepo {
 
-    { GithubApplication.getInstance().getAppComponent().inject(this); }
+    { GithubApplication.getInstance().getRepositoriesComponent().inject(this); }
     @Inject
     IDataSource dataSource;
     @Inject

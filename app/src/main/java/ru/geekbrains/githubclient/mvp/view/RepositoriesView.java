@@ -10,5 +10,7 @@ public interface RepositoriesView extends MvpView {
     void setLogin(String login);
     void setReposCount(int count);
     void updateList();
+
+    @Skip void releaseDaggerComponent();
     @Skip void showError(String description);
 }

@@ -11,7 +11,7 @@ import ru.terrakok.cicerone.Router;
 public class ShowRepositoryPresenter extends MvpPresenter<ShowRepositoryView> {
     private GithubRepository githubRepository;
 
-    { GithubApplication.getInstance().getAppComponent().inject(this); }
+    { GithubApplication.getInstance().getRepositoriesComponent().inject(this); }
     @Inject
     Router router;
 

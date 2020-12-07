@@ -11,7 +11,6 @@ import moxy.MvpPresenter;
 import ru.geekbrains.githubclient.GithubApplication;
 import ru.geekbrains.githubclient.mvp.model.entity.GithubUser;
 import ru.geekbrains.githubclient.mvp.model.repo.IGithubUsersRepo;
-import ru.geekbrains.githubclient.mvp.model.repo.retrofit.RetrofitGithubUsersRepo;
 import ru.geekbrains.githubclient.mvp.presenter.list.IUserListPresenter;
 import ru.geekbrains.githubclient.mvp.view.UserItemView;
 import ru.geekbrains.githubclient.mvp.view.UsersView;
@@ -21,7 +20,7 @@ import ru.terrakok.cicerone.Router;
 public class UsersPresenter extends MvpPresenter<UsersView> {
     private final CompositeDisposable disposables = new CompositeDisposable();
 
-    { GithubApplication.getInstance().getAppComponent().inject(this); }
+    { GithubApplication.getInstance().getUsersComponent().inject(this); }
     @Inject
     Router router;
     @Inject
@@ -85,5 +84,11 @@ public class UsersPresenter extends MvpPresenter<UsersView> {
     public boolean backPressed() {
         router.exit();
         return true;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getViewState().releaseDaggerComponent();
     }
 }
