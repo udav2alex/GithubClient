@@ -22,7 +22,7 @@ public class RepositoriesPresenter extends MvpPresenter<RepositoriesView> {
     private GithubUser githubUser;
     private final CompositeDisposable disposables = new CompositeDisposable();
 
-    { GithubApplication.getInstance().getAppComponent().inject(this); }
+    { GithubApplication.getInstance().getRepositoriesComponent().inject(this); }
     @Inject
     Scheduler scheduler;
     @Inject
@@ -92,5 +92,11 @@ public class RepositoriesPresenter extends MvpPresenter<RepositoriesView> {
     public boolean backPressed() {
         router.exit();
         return true;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getViewState().releaseDaggerComponent();
     }
 }

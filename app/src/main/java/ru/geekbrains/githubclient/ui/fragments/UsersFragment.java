@@ -16,6 +16,7 @@ import java.util.Objects;
 
 import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
+import ru.geekbrains.githubclient.GithubApplication;
 import ru.geekbrains.githubclient.R;
 import ru.geekbrains.githubclient.mvp.presenter.UsersPresenter;
 import ru.geekbrains.githubclient.mvp.view.UsersView;
@@ -57,6 +58,11 @@ public class UsersFragment extends MvpAppCompatFragment implements UsersView, Ba
     @Override
     public void updateList() {
         Objects.requireNonNull(recyclerView.getAdapter()).notifyDataSetChanged();
+    }
+
+    @Override
+    public void releaseDaggerComponent() {
+        GithubApplication.getInstance().releaseUsersComponent();
     }
 
     @Override

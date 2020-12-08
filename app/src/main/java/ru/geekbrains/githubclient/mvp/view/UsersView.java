@@ -8,5 +8,7 @@ import moxy.viewstate.strategy.alias.Skip;
 public interface UsersView extends MvpView {
     void init();
     void updateList();
+
+    @Skip void releaseDaggerComponent();
     @Skip void showError(String description);
 }

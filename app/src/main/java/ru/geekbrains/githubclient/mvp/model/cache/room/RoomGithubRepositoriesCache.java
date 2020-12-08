@@ -1,6 +1,7 @@
 package ru.geekbrains.githubclient.mvp.model.cache.room;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -16,14 +17,39 @@ import ru.geekbrains.githubclient.mvp.model.entity.room.RoomGithubRepository;
 
 public class RoomGithubRepositoriesCache implements IGithubRepositoriesCache {
 
-    { GithubApplication.getInstance().getAppComponent().inject(this); }
+    { GithubApplication.getInstance().getRepositoriesComponent().inject(this); }
     @Inject
     GithubDatabase database;
 
     @Override
     public Completable saveRepositories(List<GithubRepository> repositories, GithubUser user) {
         return Completable.fromAction(
-              () -> database.githubRepositoryDAO().insert(domainList2RoomList(repositories, user))
+              () -> {
+                  List<RoomGithubRepository> oldList =
+                        database.githubRepositoryDAO().getAll(user.getId());
+                  List<RoomGithubRepository> newList =
+                        domainList2RoomList(repositories, user);
+                  List<RoomGithubRepository> excludeList =
+                        new ArrayList<>();
+
+                  for (RoomGithubRepository oldItem : oldList) {
+                      boolean notFound = true;
+
+                      for (RoomGithubRepository newItem : newList) {
+                          if (oldItem.getId().equals(newItem.getId())) {
+                              notFound = false;
+                              break;
+                          }
+                      }
+
+                      if (notFound) {
+                          excludeList.add(oldItem);
+                      }
+                  }
+
+                  database.githubRepositoryDAO().delete(excludeList);
+                  database.githubRepositoryDAO().insert(newList);
+              }
         );
     }
 

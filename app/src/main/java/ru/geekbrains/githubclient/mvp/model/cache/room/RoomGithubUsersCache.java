@@ -15,7 +15,7 @@ import ru.geekbrains.githubclient.mvp.model.entity.room.RoomGithubUser;
 
 public class RoomGithubUsersCache implements IGithubUsersCache {
 
-    { GithubApplication.getInstance().getAppComponent().inject(this); }
+    { GithubApplication.getInstance().getUsersComponent().inject(this); }
     @Inject
     GithubDatabase database;
 
