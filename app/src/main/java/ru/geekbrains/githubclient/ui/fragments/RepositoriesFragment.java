@@ -17,28 +17,27 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
 import moxy.presenter.ProvidePresenter;
+import ru.geekbrains.githubclient.GithubApplication;
 import ru.geekbrains.githubclient.R;
+import ru.geekbrains.githubclient.mvp.model.cache.room.RoomGithubRepositoriesCache;
 import ru.geekbrains.githubclient.mvp.model.entity.GithubUser;
+import ru.geekbrains.githubclient.mvp.model.entity.room.GithubDatabase;
+import ru.geekbrains.githubclient.mvp.model.repo.retrofit.RetrofitGithubRepositoriesRepo;
 import ru.geekbrains.githubclient.mvp.presenter.RepositoriesPresenter;
 import ru.geekbrains.githubclient.mvp.view.RepositoriesView;
 import ru.geekbrains.githubclient.ui.BackButtonListener;
 import ru.geekbrains.githubclient.ui.adapter.RepositoryRVAdapter;
+import ru.geekbrains.githubclient.ui.network.AndroidNetworkStatus;
 
 public class RepositoriesFragment extends MvpAppCompatFragment implements RepositoriesView, BackButtonListener {
     private static final String BUNDLE_KEY_GITHUB_USER = "ShowUserFragment.GithubUser";
 
-    private View view;
     private TextView userLogin;
     private TextView reposCount;
     private RecyclerView recyclerView;
 
     @InjectPresenter
     RepositoriesPresenter repositoriesPresenter;
-
-    @ProvidePresenter
-    RepositoriesPresenter getRepositoriesPresenter() {
-        return new RepositoriesPresenter(AndroidSchedulers.mainThread());
-    }
 
     public static RepositoriesFragment getInstance(GithubUser githubUser) {
         RepositoriesFragment fragment = new RepositoriesFragment();
@@ -65,7 +64,7 @@ public class RepositoriesFragment extends MvpAppCompatFragment implements Reposi
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_repositories, container, false);
+        View view = inflater.inflate(R.layout.fragment_repositories, container, false);
 
         userLogin = view.findViewById(R.id.tv_user_login);
         reposCount = view.findViewById(R.id.tv_repos_count);

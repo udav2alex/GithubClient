@@ -14,10 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Objects;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import moxy.MvpAppCompatFragment;
 import moxy.presenter.InjectPresenter;
-import moxy.presenter.ProvidePresenter;
 import ru.geekbrains.githubclient.R;
 import ru.geekbrains.githubclient.mvp.presenter.UsersPresenter;
 import ru.geekbrains.githubclient.mvp.view.UsersView;
@@ -32,11 +30,6 @@ public class UsersFragment extends MvpAppCompatFragment implements UsersView, Ba
 
     @InjectPresenter
     UsersPresenter usersPresenter;
-
-    @ProvidePresenter
-    UsersPresenter getUsersPresenter() {
-        return new UsersPresenter(AndroidSchedulers.mainThread());
-    }
 
     @Nullable
     @Override

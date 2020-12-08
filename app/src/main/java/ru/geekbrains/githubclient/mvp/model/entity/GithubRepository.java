@@ -5,14 +5,17 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 
-public class UserRepository implements Parcelable {
+public class GithubRepository implements Parcelable {
     @Expose private String id;
     @Expose private String name;
     @Expose private String description;
     @Expose private int forks;
 
-    public UserRepository(String id) {
+    public GithubRepository(String id, String name, String description, int forks) {
         this.id = id;
+        this.name = name;
+        this.description = description;
+        this.forks = forks;
     }
 
     public String getId() {
@@ -31,24 +34,40 @@ public class UserRepository implements Parcelable {
         return forks;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setForks(int forks) {
+        this.forks = forks;
+    }
+
 
     // Parcelization code below
-    protected UserRepository(Parcel in) {
+    protected GithubRepository(Parcel in) {
         id = in.readString();
         name = in.readString();
         description = in.readString();
         forks = in.readInt();
     }
 
-    public static final Creator<UserRepository> CREATOR = new Creator<UserRepository>() {
+    public static final Creator<GithubRepository> CREATOR = new Creator<GithubRepository>() {
         @Override
-        public UserRepository createFromParcel(Parcel in) {
-            return new UserRepository(in);
+        public GithubRepository createFromParcel(Parcel in) {
+            return new GithubRepository(in);
         }
 
         @Override
-        public UserRepository[] newArray(int size) {
-            return new UserRepository[size];
+        public GithubRepository[] newArray(int size) {
+            return new GithubRepository[size];
         }
     };
 

@@ -3,7 +3,7 @@ package ru.geekbrains.githubclient.navigation;
 import androidx.fragment.app.Fragment;
 
 import ru.geekbrains.githubclient.mvp.model.entity.GithubUser;
-import ru.geekbrains.githubclient.mvp.model.entity.UserRepository;
+import ru.geekbrains.githubclient.mvp.model.entity.GithubRepository;
 import ru.geekbrains.githubclient.ui.fragments.RepositoriesFragment;
 import ru.geekbrains.githubclient.ui.fragments.ShowRepositoryFragment;
 import ru.geekbrains.githubclient.ui.fragments.UsersFragment;
@@ -32,16 +32,16 @@ public class Screens {
     }
 
     public static class ShowRepositoryScreen extends SupportAppScreen {
-        private final UserRepository userRepository;
+        private final GithubRepository githubRepository;
 
-        public ShowRepositoryScreen(UserRepository userRepository) {
+        public ShowRepositoryScreen(GithubRepository githubRepository) {
             super();
-            this.userRepository = userRepository;
+            this.githubRepository = githubRepository;
         }
 
         @Override
         public Fragment getFragment() {
-            return ShowRepositoryFragment.getInstance(userRepository);
+            return ShowRepositoryFragment.getInstance(githubRepository);
         }
     }
 }

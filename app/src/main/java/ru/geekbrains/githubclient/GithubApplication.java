@@ -1,45 +1,31 @@
 package ru.geekbrains.githubclient;
 
 import android.app.Application;
-import android.content.Context;
 
-import ru.terrakok.cicerone.Cicerone;
-import ru.terrakok.cicerone.NavigatorHolder;
-import ru.terrakok.cicerone.Router;
+import ru.geekbrains.githubclient.di.AppComponent;
+import ru.geekbrains.githubclient.di.DaggerAppComponent;
+import ru.geekbrains.githubclient.di.module.ApplicationModule;
 
 public class GithubApplication extends Application {
-    public static GithubApplication INSTANCE;
+    static GithubApplication instance;
+    static AppComponent appComponent;
 
-    private Cicerone<Router> cicerone;
-    private ApiHolder apiHolder;
+    public static final boolean DEBUG_MODE = true;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        INSTANCE = this;
-
-        initCicerone();
+        instance = this;
+        appComponent = DaggerAppComponent.builder()
+              .applicationModule(new ApplicationModule(this)).build();
     }
 
-    public static GithubApplication getApplication() {
-        return INSTANCE;
+    public AppComponent getAppComponent() {
+        return appComponent;
     }
 
-    public Router getRouter() {
-        return cicerone.getRouter();
-    }
-
-    public ApiHolder getApi() {
-        return apiHolder;
-    }
-
-    private void initCicerone() {
-        cicerone = Cicerone.create();
-        apiHolder = new ApiHolder();
-    }
-
-    public NavigatorHolder getNavigatorHolder() {
-        return cicerone.getNavigatorHolder();
+    public static GithubApplication getInstance() {
+        return instance;
     }
 }
