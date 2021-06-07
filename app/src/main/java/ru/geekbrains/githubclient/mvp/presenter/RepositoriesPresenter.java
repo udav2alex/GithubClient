@@ -22,13 +22,25 @@ public class RepositoriesPresenter extends MvpPresenter<RepositoriesView> {
     private GithubUser githubUser;
     private final CompositeDisposable disposables = new CompositeDisposable();
 
-    { GithubApplication.getInstance().getAppComponent().inject(this); }
     @Inject
     Scheduler scheduler;
     @Inject
     IGithubRepositoriesRepo repositoriesRepo;
     @Inject
     Router router;
+
+    public RepositoriesPresenter() {
+        GithubApplication.getInstance().getAppComponent().inject(this);
+    }
+
+    public RepositoriesPresenter(
+          Scheduler scheduler,
+          IGithubRepositoriesRepo repositoriesRepo,
+          Router router) {
+        this.scheduler = scheduler;
+        this.repositoriesRepo = repositoriesRepo;
+        this.router = router;
+    }
 
     private class RepositoriesListPresenter implements IRepositoriesListPresenter {
         private final List<GithubRepository> repositories = new ArrayList<>();
