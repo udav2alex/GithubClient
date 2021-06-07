@@ -38,8 +38,8 @@ public class UsersPresenter extends MvpPresenter<UsersView> {
         this.router = router;
     }
 
-    private class UsersListPresenter implements IUserListPresenter {
-        private final List<GithubUser> users = new ArrayList<>();
+    public class UsersListPresenter implements IUserListPresenter {
+        public final List<GithubUser> users = new ArrayList<>();
 
         @Override
         public void onItemClick(UserItemView view) {
@@ -74,7 +74,7 @@ public class UsersPresenter extends MvpPresenter<UsersView> {
         loadData();
     }
 
-    private void loadData() {
+    public void loadData() {
         disposables.add(userRepo.getUsers()
             .observeOn(scheduler)
             .subscribe(

@@ -6,19 +6,25 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
+
 import io.reactivex.rxjava3.core.Scheduler;
+import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import ru.geekbrains.githubclient.mvp.model.entity.GithubUser;
 import ru.geekbrains.githubclient.mvp.model.repo.IGithubUsersRepo;
 import ru.geekbrains.githubclient.mvp.presenter.UsersPresenter;
 import ru.terrakok.cicerone.Router;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class UsersPresenterTest {
 
     private UsersPresenter presenter;
 
-    private Scheduler scheduler = Schedulers.trampoline();
+    private final Scheduler scheduler = Schedulers.trampoline();
 
     @Mock
     IGithubUsersRepo userRepo;
@@ -35,11 +41,20 @@ public class UsersPresenterTest {
     @Test
     public void navigateBack_Test() {
         presenter.backPressed();
-        Mockito.verify(router, Mockito.times(1)).exit();
+        verify(router, Mockito.times(1)).exit();
     }
 
     @Test
     public void loadData_Test() {
+        when(userRepo.getUsers())
+              .thenReturn(
+                    Single.just(new ArrayList<>())
+              );
 
+        presenter.loadData();
+
+        assertNotNull(presenter.getUsersListPresenter().users);
+        assertEquals(new ArrayList<GithubUser>(), presenter.getUsersListPresenter().users);
+        assertEquals(0, presenter.getUsersListPresenter().getCount());
     }
 }

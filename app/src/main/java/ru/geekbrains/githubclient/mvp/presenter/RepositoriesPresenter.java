@@ -22,7 +22,6 @@ public class RepositoriesPresenter extends MvpPresenter<RepositoriesView> {
     private GithubUser githubUser;
     private final CompositeDisposable disposables = new CompositeDisposable();
 
-    { GithubApplication.getInstance().getAppComponent().inject(this); }
     @Inject
     Scheduler scheduler;
     @Inject
@@ -30,7 +29,9 @@ public class RepositoriesPresenter extends MvpPresenter<RepositoriesView> {
     @Inject
     Router router;
 
-    public RepositoriesPresenter() {}
+    public RepositoriesPresenter() {
+        GithubApplication.getInstance().getAppComponent().inject(this);
+    }
 
     public RepositoriesPresenter(
           Scheduler scheduler,
