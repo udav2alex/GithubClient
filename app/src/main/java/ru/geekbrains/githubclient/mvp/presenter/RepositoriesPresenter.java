@@ -30,6 +30,17 @@ public class RepositoriesPresenter extends MvpPresenter<RepositoriesView> {
     @Inject
     Router router;
 
+    public RepositoriesPresenter() {}
+
+    public RepositoriesPresenter(
+          Scheduler scheduler,
+          IGithubRepositoriesRepo repositoriesRepo,
+          Router router) {
+        this.scheduler = scheduler;
+        this.repositoriesRepo = repositoriesRepo;
+        this.router = router;
+    }
+
     private class RepositoriesListPresenter implements IRepositoriesListPresenter {
         private final List<GithubRepository> repositories = new ArrayList<>();
 

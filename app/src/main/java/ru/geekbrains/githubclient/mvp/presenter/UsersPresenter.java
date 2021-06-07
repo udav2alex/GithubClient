@@ -10,8 +10,8 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import moxy.MvpPresenter;
 import ru.geekbrains.githubclient.GithubApplication;
 import ru.geekbrains.githubclient.mvp.model.entity.GithubUser;
+import ru.geekbrains.githubclient.mvp.model.repo.IGithubRepositoriesRepo;
 import ru.geekbrains.githubclient.mvp.model.repo.IGithubUsersRepo;
-import ru.geekbrains.githubclient.mvp.model.repo.retrofit.RetrofitGithubUsersRepo;
 import ru.geekbrains.githubclient.mvp.presenter.list.IUserListPresenter;
 import ru.geekbrains.githubclient.mvp.view.UserItemView;
 import ru.geekbrains.githubclient.mvp.view.UsersView;
@@ -21,13 +21,22 @@ import ru.terrakok.cicerone.Router;
 public class UsersPresenter extends MvpPresenter<UsersView> {
     private final CompositeDisposable disposables = new CompositeDisposable();
 
-    { GithubApplication.getInstance().getAppComponent().inject(this); }
     @Inject
     Router router;
     @Inject
     IGithubUsersRepo userRepo;
     @Inject
     Scheduler scheduler;
+
+    public UsersPresenter() {
+        GithubApplication.getInstance().getAppComponent().inject(this);
+    }
+
+    public UsersPresenter(Scheduler scheduler, IGithubUsersRepo userRepo, Router router) {
+        this.scheduler = scheduler;
+        this.userRepo = userRepo;
+        this.router = router;
+    }
 
     private class UsersListPresenter implements IUserListPresenter {
         private final List<GithubUser> users = new ArrayList<>();
