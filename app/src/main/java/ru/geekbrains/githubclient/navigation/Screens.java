@@ -2,6 +2,8 @@ package ru.geekbrains.githubclient.navigation;
 
 import androidx.fragment.app.Fragment;
 
+import java.util.Objects;
+
 import ru.geekbrains.githubclient.mvp.model.entity.GithubUser;
 import ru.geekbrains.githubclient.mvp.model.entity.GithubRepository;
 import ru.geekbrains.githubclient.ui.fragments.RepositoriesFragment;
@@ -23,6 +25,19 @@ public class Screens {
         public RepositoriesScreen(GithubUser githubUser) {
             super();
             this.githubUser = githubUser;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof RepositoriesScreen)) return false;
+            RepositoriesScreen that = (RepositoriesScreen) o;
+            return Objects.equals(githubUser, that.githubUser);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(githubUser);
         }
 
         @Override
