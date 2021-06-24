@@ -21,7 +21,7 @@ import ru.geekbrains.githubclient.ui.BackButtonListener;
 public class ShowRepositoryFragment extends MvpAppCompatFragment
     implements ShowRepositoryView, BackButtonListener {
 
-    private final static String BUNDLE_KEY_USER_REPOSITORY = "ShowRepositoryFragment.userRepository";
+    public final static String BUNDLE_KEY_USER_REPOSITORY = "ShowRepositoryFragment.userRepository";
 
     private TextView repositoryName;
     private TextView repositoryDescription;

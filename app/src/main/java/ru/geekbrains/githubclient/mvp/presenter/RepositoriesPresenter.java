@@ -55,7 +55,7 @@ public class RepositoriesPresenter extends MvpPresenter<RepositoriesView> {
         public void bindView(RepositoryItemView view) {
             GithubRepository repository = repositories.get(view.getPos());
             view.setName(repository.getName());
-            view.setDescription(repository.getName());
+            view.setDescription(repository.getDescription());
         }
 
         @Override
