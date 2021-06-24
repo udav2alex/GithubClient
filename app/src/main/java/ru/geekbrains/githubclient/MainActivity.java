@@ -43,7 +43,6 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
     @Override
     protected void onPause() {
         super.onPause();
-
         navigatorHolder.removeNavigator();
     }
 

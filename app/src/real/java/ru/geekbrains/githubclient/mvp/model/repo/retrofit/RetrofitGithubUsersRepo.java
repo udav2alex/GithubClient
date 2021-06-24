@@ -8,7 +8,6 @@ import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import ru.geekbrains.githubclient.GithubApplication;
 import ru.geekbrains.githubclient.mvp.model.api.IDataSource;
-import ru.geekbrains.githubclient.mvp.model.cache.IGithubRepositoriesCache;
 import ru.geekbrains.githubclient.mvp.model.cache.IGithubUsersCache;
 import ru.geekbrains.githubclient.mvp.model.entity.GithubUser;
 import ru.geekbrains.githubclient.mvp.model.network.INetworkStatus;
