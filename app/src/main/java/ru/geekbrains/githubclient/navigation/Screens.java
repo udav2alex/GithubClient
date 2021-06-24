@@ -1,9 +1,7 @@
 package ru.geekbrains.githubclient.navigation;
 
 import androidx.fragment.app.Fragment;
-
 import java.util.Objects;
-
 import ru.geekbrains.githubclient.mvp.model.entity.GithubUser;
 import ru.geekbrains.githubclient.mvp.model.entity.GithubRepository;
 import ru.geekbrains.githubclient.ui.fragments.RepositoriesFragment;

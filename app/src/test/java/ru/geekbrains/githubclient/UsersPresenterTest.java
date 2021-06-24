@@ -18,7 +18,6 @@ import ru.geekbrains.githubclient.mvp.view.UserItemView;
 import ru.geekbrains.githubclient.mvp.view.UsersView;
 import ru.geekbrains.githubclient.navigation.Screens;
 import ru.terrakok.cicerone.Router;
-import ru.terrakok.cicerone.Screen;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.eq;
