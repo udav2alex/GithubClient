@@ -53,6 +53,19 @@ public class Screens {
         }
 
         @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof ShowRepositoryScreen)) return false;
+            ShowRepositoryScreen that = (ShowRepositoryScreen) o;
+            return githubRepository.equals(that.githubRepository);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(githubRepository);
+        }
+
+        @Override
         public Fragment getFragment() {
             return ShowRepositoryFragment.getInstance(githubRepository);
         }
