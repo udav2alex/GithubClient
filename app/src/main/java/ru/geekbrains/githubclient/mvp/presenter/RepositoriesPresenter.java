@@ -42,8 +42,8 @@ public class RepositoriesPresenter extends MvpPresenter<RepositoriesView> {
         this.router = router;
     }
 
-    private class RepositoriesListPresenter implements IRepositoriesListPresenter {
-        private final List<GithubRepository> repositories = new ArrayList<>();
+    public class RepositoriesListPresenter implements IRepositoriesListPresenter {
+        public final List<GithubRepository> repositories = new ArrayList<>();
 
         @Override
         public void onItemClick(RepositoryItemView view) {
@@ -79,7 +79,7 @@ public class RepositoriesPresenter extends MvpPresenter<RepositoriesView> {
         loadData();
     }
 
-    private void loadData() {
+    public void loadData() {
         disposables.add(repositoriesRepo
               .getRepos(githubUser)
               .observeOn(scheduler)
@@ -89,7 +89,8 @@ public class RepositoriesPresenter extends MvpPresenter<RepositoriesView> {
                         repositoriesListPresenter.repositories.addAll(userRepositories);
                         getViewState().setReposCount(userRepositories.size());
                         getViewState().updateList();
-                    }
+                    },
+                    (throwable) -> getViewState().showError(throwable.getMessage())
               ));
     }
 
